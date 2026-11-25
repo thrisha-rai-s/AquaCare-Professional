@@ -1,203 +1,323 @@
-﻿# AquaCare Professional
+# AquaCare Professional
 
 ### Community Water Quality Reporting and Awareness Portal
 
 **Every Drop Matters. Every Report Makes a Difference.**
 
-AquaCare Professional is a web-based platform designed to improve community water-quality awareness and simplify the reporting and tracking of water-related problems.
+AquaCare Professional is a web-based platform designed to help community members learn about common water-quality concerns, submit reports about suspected issues, and track the administrative progress of their complaints. It also provides an authenticated dashboard through which authorised administrators can review and manage submitted complaints.
 
-## Project Overview
+> **Project type:** Project-Based Learning (PBL) – Third Year B.E.  
+> **Department:** Computer Science and Engineering  
+> **Institution:**  Vivekananda College of Engineering & Technology, Nehru nagar Puttur
+> **Academic year:** 2026-27
 
-The platform connects community members and authorised administrators through a centralized complaint management system. Users can register, submit water-quality complaints, receive unique Complaint IDs and monitor their complaint progress.
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Objectives](#objectives)
+- [Key Features](#key-features)
+- [Technology Stack](#technology-stack)
+- [How the System Works](#how-the-system-works)
+- [System Architecture](#system-architecture)
+- [Firestore Data Structure](#firestore-data-structure)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Firebase Configuration](#firebase-configuration)
+- [Run Locally](#run-locally)
+- [Deployment](#deployment)
+- [Testing Checklist](#testing-checklist)
+- [Limitations](#limitations)
+- [Future Enhancements](#future-enhancements)
+- [Team](#team)
+- [Disclaimer](#disclaimer)
+
+---
+
+## Overview
+
+Water-quality concerns can be difficult to communicate and follow up on when reports are handled through disconnected channels. AquaCare provides a central web interface for awareness, complaint registration, complaint identification, status tracking, and administrative management.
+
+The website has separate user-facing and administrator-facing functions. Registered users can view their own complaint history, while authorised administrators can review submitted complaints and update their status.
 
 ## Problem Statement
 
-Water-quality concerns are often reported through disconnected communication channels. This can make complaint management, record maintenance and progress tracking difficult.
+Community members may observe water-quality concerns such as unusual colour, unpleasant smell, unusual taste, visible sediments, or suspected contamination. However, reporting these concerns and checking their progress can be difficult when information is not recorded in one organised system.
 
-AquaCare addresses this problem through a centralized digital reporting and awareness platform.
+AquaCare addresses this challenge by providing a centralised digital platform for recording reports and viewing their administrative status.
 
 ## Objectives
 
-- Develop a centralized water-quality complaint reporting system.
-- Provide user registration and authentication.
-- Generate unique Complaint IDs.
-- Maintain individual complaint history.
-- Enable complaint status tracking.
-- Provide an administrator dashboard.
-- Promote water-quality awareness.
+1. Provide accessible information about common water-quality concerns and safe water practices.
+2. Allow users to register, sign in, and access a personal profile.
+3. Collect structured information when a user submits a water-quality complaint.
+4. Generate a unique Complaint ID for each submitted report.
+5. Save a user's Complaint IDs and reported date/time in their personal report history.
+6. Allow users to check complaint progress using the Complaint ID.
+7. Provide authorised administrators with tools to review complaints, view summary statistics, and update complaint status.
 
 ## Key Features
 
-### 1. Homepage and Water Awareness
-- Information about common water-quality problems.
-- Awareness about safe water storage and hygiene.
-- Guidance on appropriate water-quality testing.
+### Public website and awareness
 
-### 2. User Account Management
-- New user registration.
-- Email and password login.
-- Personalized user profile.
-- Personal complaint history.
+- Homepage with project information and navigation.
+- Awareness content covering unusual water colour, mud or sediments, bad or unusual smell, unusual taste, and suspected contamination.
+- Basic information about safe storage, hygiene, water testing, and safer water sources.
 
-### 3. Complaint Registration
-Users can submit:
-- Full name and contact details.
-- Area or location.
-- Water source.
-- Type of water problem.
-- Frequency of occurrence.
-- Problem description.
+### User account
 
-### 4. Complaint Identification and Tracking
-- Automatic generation of unique Complaint IDs.
-- Storage of reported date and time.
-- Search using Complaint ID.
-- Status monitoring.
+- User registration with name, email address, phone number, and password.
+- Email-and-password login and logout using Firebase Authentication.
+- Personal profile information stored in Cloud Firestore.
+- Personal complaint history containing Complaint IDs and reported timestamps.
 
-### 5. Admin Dashboard
-- Authorised administrator login.
-- View submitted complaints.
-- Total, Pending, In Progress and Resolved statistics.
-- Search and filter complaints.
-- Update complaint status.
-- Record last updated and resolution timestamps.
+### Complaint registration
 
-## Complaint Status Workflow
+- Structured form for contact details, location, water source, problem type, frequency, and description.
+- Unique Complaint ID generated for each report.
+- Complaint record, public tracking record, and user report-history record written to Firestore.
 
-1. Pending – Complaint received.
-2. In Progress – Complaint is being addressed.
-3. Resolved – Complaint marked as resolved.
+### Complaint tracking
+
+- Search for an individual complaint using its Complaint ID.
+- Display the current status and relevant report/update/resolution timestamps.
+- Status values: **Pending**, **In Progress**, and **Resolved**.
+
+### Administrator dashboard
+
+- Administrator sign-in and access control.
+- Complaint list with details and reported date/time.
+- Summary counts for total, pending, in-progress, and resolved reports.
+- Search and status filtering.
+- Status update controls that synchronise the complaint and tracking records.
 
 ## Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| HTML5 | Website structure |
-| CSS3 | Styling and responsive design |
-| JavaScript | Application logic |
-| Firebase Authentication | User and admin authentication |
-| Cloud Firestore | Cloud database |
-| Git and GitHub | Version control and source-code hosting |
-| GitHub Pages / Vercel | Website deployment |
+| HTML5 | Structure of the website pages and forms |
+| CSS3 | Layout, responsive styling, and visual design |
+| JavaScript (ES modules) | Page interactions, application logic, and Firebase operations |
+| Firebase Authentication | User and administrator authentication |
+| Cloud Firestore | User profiles, complaint records, report history, and tracking data |
+| Git and GitHub | Source-code version control and collaboration |
+| GitHub Pages / Vercel | Static website hosting options |
+
+## How the System Works
+
+1. A visitor opens the AquaCare homepage and can explore water-awareness information.
+2. A new user creates an account or an existing user signs in.
+3. The signed-in user opens the complaint form and enters the required details.
+4. The application generates a unique Complaint ID.
+5. The complaint details, a limited tracking record, and the user's report-history entry are saved in Firestore.
+6. The user can view the Complaint ID and reported date/time in **My Submitted Reports**.
+7. The user can enter the Complaint ID on the tracking page to view its current status.
+8. An authorised administrator signs in to the admin dashboard, reviews the complaint, and changes its status when appropriate.
+9. The tracking record is updated so the user can check the latest administrative status.
+
+### Complaint lifecycle
+
+`Pending` → `In Progress` → `Resolved`
+
+The status represents the progress recorded by the AquaCare administrator. It is not an independent verification that a physical water-quality problem has been corrected.
 
 ## System Architecture
 
-User / Administrator
-        |
-        v
-Web Interface (HTML, CSS, JavaScript)
-        |
-        v
-Application Logic
-        |
-        v
-Firebase Authentication
-        |
-        v
-Cloud Firestore
-        |
-        v
-Complaint Management and Tracking
+```text
+Community User                         Authorised Administrator
+      |                                           |
+      v                                           v
+AquaCare Website                           Admin Dashboard
+      |                                           |
+      +---------------- JavaScript --------------+
+                           |
+                           v
+                  Firebase Authentication
+                           |
+                           v
+                     Cloud Firestore
+                           |
+          +----------------+----------------+
+          |                |                |
+          v                v                v
+       users          complaints     publicTracking
+   profile/reports   full report     limited status data
+```
 
-## Firebase Database Structure
+## Firestore Data Structure
 
-- users – User profile information.
-- users/{uid}/reports – Individual complaint history.
-- complaints – Complete complaint information.
-- publicTracking – Limited complaint tracking information.
+The application uses the following collections and subcollections:
 
-Firestore Security Rules are used to restrict access to private user records and administrative operations.
+| Firestore path | Purpose | Typical data |
+|---|---|---|
+| `users/{uid}` | User profile | Name, email, phone, account timestamps |
+| `users/{uid}/reports/{reportDocId}` | Private report history for that user | Complaint ID, reported timestamp |
+| `complaints/{complaintDocId}` | Full complaint record | User ID, contact details, location, water source, problem, frequency, description, status, timestamps |
+| `publicTracking/{complaintId}` | Limited tracking record | Complaint ID, complaint document ID, status, reported/updated/resolved timestamps |
 
-## Project File Structure
+The full complaint collection contains personal information and should remain protected by Firestore Security Rules. The public tracking record should contain only the minimum information needed to display an individual complaint's progress.
+
+## Project Structure
+
+The main files in the project are:
 
 ```text
 AquaCare-Professional/
 |
-|-- index.html
-|-- style.css
-|-- script.js
-|-- firebase.js
-|-- account.js
-|-- report.html
-|-- report.js
-|-- admin.html
-|-- admin.js
-|-- track.html
-|-- track.js
-|-- README.md
+|-- index.html       # Homepage, awareness sections, and user account interface
+|-- style.css        # Website styling and responsive layouts
+|-- script.js        # Homepage navigation and interactions
+|-- firebase.js      # Firebase app, Authentication, and Firestore setup
+|
+|-- account.js       # Registration, login, profile, and user report history
+|
+|-- report.html      # Water-quality complaint form
+|-- report.js        # Complaint submission and Firestore writes
+|
+|-- track.html       # Complaint tracking interface
+|-- track.js         # Complaint ID lookup and status display
+|
+|-- admin.html       # Administrator login and dashboard interface
+|-- admin.js         # Admin authentication, complaint list, filters, and status updates
+|
+|-- README.md        # Project documentation
+|-- .gitignore       # Files excluded from Git
 ```
 
-## Installation and Setup
+If additional deployment configuration files are present, they may also be included in the repository.
 
-1. Clone the repository:
+## Getting Started
 
-   git clone https://github.com/YOUR_USERNAME/AquaCare-Professional.git
+### Prerequisites
 
-2. Open the project folder in Visual Studio Code.
+- A computer with Windows, macOS, or Linux.
+- [Visual Studio Code](https://code.visualstudio.com/) or another code editor.
+- A modern web browser.
+- A Firebase project with Authentication and Cloud Firestore enabled.
+- [Git](https://git-scm.com/downloads).
+- A local development server such as the VS Code Live Server extension.
 
-3. Ensure the Firebase project configuration is correctly set in firebase.js.
+### Clone the repository
 
-4. Enable Email/Password authentication in Firebase Authentication.
+Replace `YOUR_GITHUB_USERNAME` with the GitHub account that owns the repository:
 
-5. Configure the required Firestore security rules.
+```bash
+git clone https://github.com/thrisha-rai-s/AquaCare-Professional.git
+cd AquaCare-Professional
+```
 
-6. Open index.html using Visual Studio Code Live Server.
+## Firebase Configuration
 
-## Testing
+1. Open the Firebase Console: https://console.firebase.google.com/.
+2. Select the AquaCare Firebase project or create a project for your own deployment.
+3. Register a Web App in Firebase Project Settings and obtain its web-app configuration.
+4. Add the configuration values to `firebase.js`.
+5. Enable **Email/Password** under Firebase Authentication sign-in providers.
+6. Create or open the Cloud Firestore database.
+7. Publish Firestore Security Rules that match the application's user, complaint, and tracking data model.
+8. Add the local and deployed website hostnames to Firebase Authentication's authorised domains when required.
 
-The following functionalities are included in the project testing:
+The current source uses Firebase JavaScript SDK modules from Firebase CDN version `12.5.0`. Keep the SDK imports consistent across the project.
 
-- User registration and login.
-- Complaint form submission.
-- Unique Complaint ID generation.
-- Personal complaint history.
-- Complaint tracking.
-- Admin authentication.
-- Dashboard statistics.
-- Complaint status updates.
-- Tracking status synchronization.
+**Security notes:**
 
-## Project Scope and Limitations
+- Never commit service-account private keys, passwords, private API credentials, or `.env` secrets.
+- Firebase web-app configuration is used by client-side applications; it does not replace Firestore Security Rules.
+- Restrict full complaint records to the complaint owner and authorised administrator, as appropriate to the implemented rules.
+- Users should only be able to read their own profile and report-history records.
+- The current ID-based public tracking design allows someone who knows a Complaint ID to retrieve its limited tracking record. Use sufficiently unpredictable IDs and do not put personal details in `publicTracking`.
+- Review and test all Firestore Rules before using real community data. The sample project is an academic prototype, not a certified public-service system.
 
-AquaCare provides digital reporting, awareness and complaint management. It does not independently detect contaminants, perform laboratory testing or automatically resolve physical water-quality problems.
+## Run Locally
+
+1. Open the cloned `AquaCare-Professional` folder in VS Code.
+2. Confirm that `firebase.js` contains the correct Firebase web-app configuration.
+3. Start the folder using the Live Server extension, or another static development server.
+4. Open the local URL shown by the server, such as `http://127.0.0.1:5500/`.
+5. Test the homepage and open `report.html`, `track.html`, and `admin.html` through the local server.
+
+Do not open the HTML files directly with a `file:///` URL. JavaScript ES modules and Firebase web functionality should be tested through a local HTTP server.
+
+## Deployment
+
+### Option A: GitHub Pages
+
+1. Push the project to a GitHub repository.
+2. Open the repository's **Settings → Pages**.
+3. Under **Build and deployment**, choose **Deploy from a branch**.
+4. Select the `main` branch and the `/ (root)` folder if the HTML files are in the repository root.
+5. Save and wait for the Pages deployment to complete.
+6. Add the deployed hostname to Firebase Authentication's authorised domains if required.
+7. Test registration, login, complaint submission, tracking, and admin operations on the published site.
+
+The expected URL format is:
+
+```text
+https://thrisha-rai-s.github.io/AquaCare-Professional/
+```
+
+### Option B: Vercel
+
+1. Import the GitHub repository into Vercel.
+2. Select **Other** as the framework preset for this plain static site.
+3. Use the repository root as the root directory when the HTML files are there.
+4. Leave the build command empty and use `.` as the output directory for a root-based static project.
+5. Deploy the site.
+6. Add the Vercel hostname to Firebase Authentication's authorised domains if required.
+7. Test all application flows on the deployed site.
+
+## Testing Checklist
+
+| Test case | Expected result |
+|---|---|
+| Open homepage | Main page and navigation load |
+| User registration | Firebase Authentication creates the account |
+| User login/logout | User can sign in and sign out |
+| User profile | Profile information is displayed |
+| Complaint submission | Complaint is saved in Firestore |
+| Complaint ID | A unique ID is displayed after successful submission |
+| User report history | The user's Complaint ID and reported date/time are displayed |
+| Complaint tracking | The matching tracking record and status are displayed |
+| Admin login | Only the configured admin account accesses the dashboard |
+| Admin status update | Complaint and tracking status are updated |
+| Resolution timestamp | Resolution date/time appears when status is set to Resolved |
+| Responsive layout | Pages remain usable on mobile and desktop screens |
+
+## Limitations
+
+- AquaCare records user-reported concerns; it does not independently test or certify water quality.
+- The system does not currently use IoT sensors to measure pH, turbidity, or other water parameters.
+- Complaint resolution is an administrative status recorded in the system; it does not automatically confirm a physical repair or water-quality improvement.
+- The current prototype does not automatically forward reports to government water departments.
+- Public tracking is based on possession of the Complaint ID; it is not a second factor of identity verification.
 
 ## Future Enhancements
 
-- IoT-based water-quality monitoring.
-- GIS-based complaint mapping.
-- Email and SMS notifications.
-- Multilingual interface.
-- Integration with authorised water-testing laboratories.
-- Coordination with local water authorities.
+- IoT integration for water-quality sensor readings.
+- GIS-based mapping of reported water concerns.
+- Email or SMS notifications when complaint status changes.
+- Regional-language support.
+- Upload and display of verified laboratory test reports.
+- Integration with authorised local water-supply departments.
+- Stronger abuse prevention and enhanced account-recovery workflows.
 
-## Conclusion
+## Team
 
-AquaCare Professional demonstrates how web technologies and cloud-based services can support community water-quality reporting and awareness.
+**Project title:** AquaCare Professional  
+**Project guide:** Prof.Rashmi P C  
+**Team members:**
 
-By integrating user accounts, digital complaint registration, unique identification, complaint tracking and administrator management, the platform provides an organized approach to managing reported water-quality concerns.
+1. Poorvi Rai - 4VP25CS066
+2. Shri Vaishnavi Alva - 4VP25CS094
+3. Spandana A - 4VP25CS097
+4. Thrisha Rai S - 4VP25CS108
 
-## Project Information
-
-**Project Name:** AquaCare Professional
-
-**Project Title:** Community Water Quality Reporting and Awareness Portal
-
-**Course:** Project-Based Learning (PBL)
-
-**Programme:** B.E. – Computer Science and Engineering
-
+**Institution:** Vivekananda College of Engineering & Technology, Nehru nagar Puttur 
+**Department:** Computer Science and Engineering  
 **University:** Visvesvaraya Technological University (VTU)
 
-**College:** [Enter College Name]
+## Disclaimer
 
-**Project Guide:** [Enter Guide Name]
-
-**Team Members:**
-- [Member 1 – Name and USN]
-- [Member 2 – Name and USN]
-- [Member 3 – Name and USN]
-- [Member 4 – Name and USN]
-
----
-
-**AquaCare Professional – Every Drop Matters. Every Report Makes a Difference.**
+AquaCare Professional is an academic PBL prototype developed for educational demonstration. It is intended to support awareness and organise user-submitted water-quality concerns. It does not replace laboratory testing, professional public-health advice, or official reporting channels.
