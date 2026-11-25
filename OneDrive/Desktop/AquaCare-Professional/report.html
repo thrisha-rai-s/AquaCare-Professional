@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report a Water Issue | AquaCare</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="script.js" defer></script>
+    <script type="module" src="./report.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h2>AquaCare Professional</h2>
+            <a href="index.html">← Back to Home</a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="report-page">
+
+            <h1>Report a Water Quality Issue</h1>
+
+            <p>
+                Help us identify water-quality problems in your community.
+                Fill in the details below to submit your report.
+            </p>
+
+            <form id="complaintForm">
+
+                <label for="fullName">Full Name</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="phone">Contact Number</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your contact number"
+                    required
+                >
+
+                <label for="location">Area / Location</label>
+                <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    placeholder="Enter your village, town or area"
+                    required
+                >
+
+                <label for="waterSource">Water Source</label>
+                <select id="waterSource" name="waterSource" required>
+                    <option value="">Select water source</option>
+                    <option value="Tap / Municipal Water">Tap / Municipal Water</option>
+                    <option value="Borewell">Borewell</option>
+                    <option value="Well">Well</option>
+                    <option value="Tanker">Tanker</option>
+                    <option value="Filtered / RO Water">Filtered / RO Water</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="problem">Type of Water Problem</label>
+                <select id="problem" name="problem" required>
+                    <option value="">Select the problem</option>
+                    <option value="Unusual Colour">Unusual Colour</option>
+                    <option value="Bad Smell">Bad Smell</option>
+                    <option value="Unusual Taste">Unusual Taste</option>
+                    <option value="Mud or Sediments">Mud or Sediments</option>
+                    <option value="Suspected Contamination">Suspected Contamination</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="frequency">
+                    How Often Does This Problem Occur?
+                </label>
+
+                <select id="frequency" name="frequency" required>
+                    <option value="">Select frequency</option>
+                    <option value="Daily">Daily</option>
+                    <option value="Frequently">Frequently</option>
+                    <option value="Sometimes">Sometimes</option>
+                    <option value="Rarely">Rarely</option>
+                </select>
+
+                <label for="description">Describe the Problem</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="5"
+                    placeholder="Explain the water-quality issue..."
+                    required
+                ></textarea>
+
+                <button type="submit">
+                    Submit Report
+                </button>
+
+            </form>
+
+            <!-- Complaint submission confirmation -->
+            <div
+                id="formMessage"
+                role="status"
+                aria-live="polite"
+                style="margin-top: 20px; padding: 15px; text-align: center;"
+            ></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 AquaCare Professional. Every Drop Matters.</p>
+    </footer>
+
+</body>
+</html>
