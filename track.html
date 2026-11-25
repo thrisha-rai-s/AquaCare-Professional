@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint | AquaCare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="report.html">Report an Issue</a>
+            <a href="track.html">Track My Complaint</a>
+        </nav>
+    </header>
+
+    <main class="tracking-container">
+        <h1>Track Your Complaint</h1>
+        <p>Enter your Complaint ID to check the latest status of your report.</p>
+
+        <div class="tracking-form">
+            <input
+                type="text"
+                id="complaintIdInput"
+                placeholder="Example: AQUA-ABC123"
+                autocomplete="off"
+            >
+
+            <button type="button" id="trackButton">
+                Track Complaint
+            </button>
+        </div>
+
+        <div id="trackingResult" aria-live="polite"></div>
+
+        <p>
+            <a href="index.html">Back to Home</a>
+        </p>
+    </main>
+
+    <script type="module" src="track.js"></script>
+</body>
+</html>
