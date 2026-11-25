@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | AquaCare Professional</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="admin.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h2>AquaCare Professional</h2>
+            <a href="index.html">← Back to Home</a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Admin Login Section -->
+        <section class="report-page" id="adminLoginSection">
+
+            <h1>Admin Login</h1>
+
+            <p>
+                Authorised project team members can log in
+                to manage community water-quality reports.
+            </p>
+
+            <form id="adminLoginForm">
+
+                <label for="adminEmail">Admin Email</label>
+
+                <input
+                    type="email"
+                    id="adminEmail"
+                    placeholder="Enter admin email"
+                    required
+                >
+
+                <label for="adminPassword">Password</label>
+
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Enter admin password"
+                    required
+                >
+
+                <button type="submit">Login</button>
+
+                <p id="loginMessage"></p>
+
+            </form>
+
+        </section>
+
+
+        <!-- Admin Dashboard Section -->
+        <section class="report-page" id="adminDashboard"
+                 style="display: none;">
+
+            <h1>Admin Dashboard</h1>
+
+            <p>Manage submitted water-quality complaints.</p>
+
+<!-- Complaint Statistics -->
+<div class="admin-stats">
+
+    <div class="stat-card">
+        <h2 id="totalCount">0</h2>
+        <p>Total Reports</p>
+    </div>
+
+    <div class="stat-card">
+        <h2 id="pendingCount">0</h2>
+        <p>Pending</p>
+    </div>
+
+    <div class="stat-card">
+        <h2 id="progressCount">0</h2>
+        <p>In Progress</p>
+    </div>
+
+    <div class="stat-card">
+        <h2 id="resolvedCount">0</h2>
+        <p>Resolved</p>
+    </div>
+
+</div>
+
+
+            <button id="logoutButton" type="button">
+                Logout
+            </button>
+
+            <h2>Submitted Complaints</h2>
+
+            
+<!-- Search and Filter Complaints -->
+
+<div class="complaint-controls">
+
+    <input
+        type="text"
+        id="complaintSearch"
+        placeholder="Search by name, location or problem..."
+    >
+
+    <select id="statusFilter">
+        <option value="All">All Complaints</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+
+</div>
+
+<div id="complaintsList">
+    Loading complaints...
+</div>
+
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 AquaCare Professional. Every Drop Matters.</p>
+    </footer>
+
+</body>
+</html>
